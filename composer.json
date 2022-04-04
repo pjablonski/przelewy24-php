@@ -1,0 +1,26 @@
+{
+  "name": "pjablonski/przelewy24-php",
+  "description": "Przelewy24 PHP library",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1.3",
+    "guzzlehttp/guzzle": "^6.4|^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Przelewy24\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Przelewy24\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
