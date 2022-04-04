@@ -1,6 +1,6 @@
 # Przelewy24 PHP library
 
-PHP wrapper for [www.przelewy24.pl](https://www.przelewy24.pl/).
+PHP wrapper for [www.przelewy24.pl](https://www.przelewy24.pl/) based on [mnastalski/przelewy24-php](https://github.com/mnastalski/przelewy24-php)  upgraded to P24 REST API and extended with new functionalities.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ composer require pjablonski/przelewy24-php
 use Przelewy24\Przelewy24;
 
 $przelewy24 = new Przelewy24([
-    'merchant_id' => '12345',
+    'merchantId' => '12345',
     'crc' => 'aef0...',
     'report' => 'report',
     'live' => false, // `true` for production/live mode
@@ -31,12 +31,14 @@ $przelewy24 = new Przelewy24([
 
 ```php
 $transaction = $przelewy24->transaction([
-    'session_id' => 'unique order identifier from your application',
-    'url_return' => 'url to return to post transaction',
-    'url_status' => 'url to which the transaction status webhook will be sent',
-    'amount' => 'transaction amount as an integer (1.25 PLN = 125)',
-    'description' => 'transaction description',
-    'email' => 'buyer email address',
+    'sessionId' => 'Unique identifier from merchant system',
+    'urlReturn' => 'URL address to which customer will be redirected when transaction is complete',
+    'urlStatus' => 'URL address to which transaction status will be send',
+    'amount' => 'Transaction amount expressed in lowest currency unit, e.g. 1.23 PLN = 123',
+    'description' => 'Transaction description',
+    'email' => 'Customer e-mail',
+    'currency' => 'Currency compatible with ISO, e.g. PLN',
+    'language' => 'One of following language codes according to ISO 639-1: bg, cs, de, en, es, fr, hr, hu, it, nl, pl, pt, se, sk'
 ]);
 ```
 
@@ -55,7 +57,8 @@ $transaction->redirectUrl();
 Retrieve the payment methods:
 
 ```php
-$transaction->paymentMethods();
+$transaction->paymentMethods($lang);
+// $lang = one of these: pl , en (default pl)
 ```
 
 ### Listening for transaction status webhook
@@ -68,9 +71,10 @@ $webhook = $przelewy24->handleWebhook();
 
 ```php
 $przelewy24->verify([
-    'session_id' => 'unique order identifier from your application',
-    'order_id' => $webhook->orderId(),   // przelewy24 order id
-    'amount' => 'transaction amount as an integer (1.25 PLN = 125)',
+    'sessionId' => 'Unique identifier from merchant system',
+    'amount' => 'Transaction amount which format is presented as amount in lowest currency unit, e.g. 1.23 PLN = 123',
+    'currency' => 'Currency compatible with ISO, e.g. PLN',
+    'orderId' => 'Id of an order assigned by P24'
 ]);
 ```
 

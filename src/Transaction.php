@@ -84,7 +84,7 @@ class Transaction extends ApiRequest
     {
         $this->parameters = array_merge($parameters, [
             'currency' => strtoupper($parameters['currency']),
-            'country' => strtoupper($parameters['country']),
+            'country' => strtoupper($parameters['country'] ?? self::LANGUAGE_PL),
             'language' => strtoupper(in_array($lang = $parameters['language'], self::SUPPORTED_LANGUAGES) ? $lang : self::LANGUAGE_PL)
         ]);
     }
