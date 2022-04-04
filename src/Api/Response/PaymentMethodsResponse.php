@@ -12,26 +12,22 @@ class PaymentMethodsResponse extends ApiResponse
      */
     protected $methods;
 
-    public function __construct(ResponseInterface $response)
+    /**
+     * @param $contents
+     * @return void
+     */
+    function prepare($contents)
     {
-        $contents = json_decode($response->getBody()->getContents());
-
         if (isset($contents->data)) {
             $this->methods = $contents->data;
-        } else {
-            $this->error = $contents->error ?? null;
-            $this->errorMessage = $contents->errorMessage ?? null;
-        }
-
-        if ($this->hasError()) {
-            throw new ApiResponseException(
-                $this->getError()
-            );
         }
     }
 
+    /**
+     * @return array
+     */
     public function methods()
     {
-        return $this->methods;
+        return $this->methods ?? [];
     }
 }

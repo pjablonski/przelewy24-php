@@ -23,19 +23,14 @@ abstract class ApiResponse
      */
     public function __construct(ResponseInterface $response)
     {
+        if ($response->getStatusCode() != 200) {
+            $this->code = $response->getStatusCode();
+            $this->error = $response->getReasonPhrase();
+        }
+
         $contents = json_decode($response->getBody()->getContents());
 
-        if(isset($contents->data)) {
-            $contents = $contents->data;
-        }
-
-        if(is_iterable($contents)) {
-            foreach ($contents as $key => $value) {
-                if (property_exists($this, $key)) {
-                    $this->$key = $value;
-                }
-            }
-        }
+        $this->prepare($contents);
 
         if ($this->hasError()) {
             throw new ApiResponseException(
@@ -58,5 +53,24 @@ abstract class ApiResponse
     protected function getError(): ?string
     {
         return $this->error;
+    }
+
+    /**
+     * @param $contents
+     * @return void
+     */
+    protected function prepare($contents)
+    {
+        if (isset($contents->data)) {
+            $contents = $contents->data;
+        }
+
+        if (is_iterable($contents)) {
+            foreach ($contents as $key => $value) {
+                if (property_exists($this, $key)) {
+                    $this->$key = $value;
+                }
+            }
+        }
     }
 }
