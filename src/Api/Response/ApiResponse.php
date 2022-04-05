@@ -65,6 +65,8 @@ abstract class ApiResponse
             $contents = $contents->data;
         }
 
+        $contents = (array) $contents;
+
         if (is_iterable($contents)) {
             foreach ($contents as $key => $value) {
                 if (property_exists($this, $key)) {
