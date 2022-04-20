@@ -32,6 +32,9 @@ class TransactionVerification extends ApiRequest
     public function __construct(array $parameters = [])
     {
         $this->parameters = array_merge($parameters, [
+            'sessionId' => (string)$parameters['sessionId'],
+            'orderId' => (int)$parameters['orderId'],
+            'amount' => (int)$parameters['amount'],
             'currency' => strtoupper($parameters['currency']),
         ]);
     }
