@@ -5,6 +5,7 @@ namespace Przelewy24;
 use Przelewy24\Api\Api;
 use Przelewy24\Api\Response\PaymentMethodsResponse;
 use Przelewy24\Api\Response\RegisterTransactionResponse;
+use Przelewy24\Api\Response\TrnBySessionIdResponse;
 use Przelewy24\Api\Response\VerifyTransactionResponse;
 
 class Przelewy24
@@ -64,6 +65,16 @@ class Przelewy24
     public function paymentMethods(string $lang = 'pl'): PaymentMethodsResponse
     {
         return $this->api->paymentMethods($lang);
+    }
+
+    /**
+     * @param string $sessionId
+     * @return TrnBySessionIdResponse
+     * @throws Exceptions\ApiResponseException
+     */
+    public function trnBySessionId(string $sessionId): TrnBySessionIdResponse
+    {
+        return $this->api->trnBySessionId($sessionId);
     }
 
     /**

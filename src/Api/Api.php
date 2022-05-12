@@ -8,22 +8,24 @@ use Przelewy24\Api\Request\SignedApiRequest;
 use Przelewy24\Api\Response\PaymentMethodsResponse;
 use Przelewy24\Api\Response\RegisterTransactionResponse;
 use Przelewy24\Api\Response\TestConnectionResponse;
+use Przelewy24\Api\Response\TrnBySessionIdResponse;
 use Przelewy24\Api\Response\VerifyTransactionResponse;
 use Przelewy24\Config;
 use Psr\Http\Message\ResponseInterface;
 
 class Api
 {
-    public const PREFIX = '/api/v1';
+    const PREFIX = '/api/v1';
 
-    public const URL_LIVE = 'https://secure.przelewy24.pl/';
-    public const URL_SANDBOX = 'https://sandbox.przelewy24.pl/';
+    const URL_LIVE = 'https://secure.przelewy24.pl/';
+    const URL_SANDBOX = 'https://sandbox.przelewy24.pl/';
 
-    public const ENDPOINT_TEST = 'testAccess/';
-    public const ENDPOINT_REGISTER = 'transaction/register/';
-    public const ENDPOINT_VERIFY = 'transaction/verify/';
-    public const ENDPOINT_PAYMENT_METHODS = 'payment/methods/';
-    public const ENDPOINT_PAYMENT_GATEWAY = 'trnRequest';
+    const ENDPOINT_TEST = 'testAccess/';
+    const ENDPOINT_REGISTER = 'transaction/register/';
+    const ENDPOINT_VERIFY = 'transaction/verify/';
+    const ENDPOINT_PAYMENT_METHODS = 'payment/methods/';
+    const ENDPOINT_PAYMENT_GATEWAY = 'trnRequest';
+    const ENDPOINT_TRN_BY_SESSID = 'transaction/by/sessionId/';
 
     /**
      * @var \Przelewy24\Config
@@ -99,6 +101,18 @@ class Api
         $response = $this->request(self::ENDPOINT_PAYMENT_METHODS . $lang, [], 'get');
 
         return new PaymentMethodsResponse($response);
+    }
+
+    /**
+     * @param string $sessionId
+     * @return TrnBySessionIdResponse
+     * @throws \Przelewy24\Exceptions\ApiResponseException
+     */
+    public function trnBySessionId(string $sessionId): TrnBySessionIdResponse
+    {
+        $response = $this->request(self::ENDPOINT_TRN_BY_SESSID . $sessionId, [], 'get');
+
+        return new TrnBySessionIdResponse($response);
     }
 
     /**

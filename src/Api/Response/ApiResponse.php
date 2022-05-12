@@ -13,9 +13,9 @@ abstract class ApiResponse
     protected $error;
 
     /**
-     * @var int
+     * @var string
      */
-    protected $code;
+    protected $errorMessage;
 
     /**
      * @param \Psr\Http\Message\ResponseInterface $response
@@ -40,22 +40,6 @@ abstract class ApiResponse
     }
 
     /**
-     * @return bool
-     */
-    protected function hasError(): bool
-    {
-        return !empty($this->error);
-    }
-
-    /**
-     * @return string|null
-     */
-    protected function getError(): ?string
-    {
-        return $this->error;
-    }
-
-    /**
      * @param $contents
      * @return void
      */
@@ -74,5 +58,21 @@ abstract class ApiResponse
                 }
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasError(): bool
+    {
+        return !empty($this->error);
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getError(): ?string
+    {
+        return $this->errorMessage;
     }
 }

@@ -7,22 +7,22 @@ use Przelewy24\Api\Request\ApiRequest;
 
 class Transaction extends ApiRequest
 {
-    public const LANGUAGE_BG = 'ng';
-    public const LANGUAGE_CS = 'cs';
-    public const LANGUAGE_DE = 'de';
-    public const LANGUAGE_EN = 'en';
-    public const LANGUAGE_ES = 'es';
-    public const LANGUAGE_FR = 'fr';
-    public const LANGUAGE_HR = 'hr';
-    public const LANGUAGE_HU = 'hu';
-    public const LANGUAGE_IT = 'it';
-    public const LANGUAGE_NL = 'nl';
-    public const LANGUAGE_PL = 'pl';
-    public const LANGUAGE_PT = 'pt';
-    public const LANGUAGE_SE = 'se';
-    public const LANGUAGE_SK = 'sk';
+    const LANGUAGE_BG = 'ng';
+    const LANGUAGE_CS = 'cs';
+    const LANGUAGE_DE = 'de';
+    const LANGUAGE_EN = 'en';
+    const LANGUAGE_ES = 'es';
+    const LANGUAGE_FR = 'fr';
+    const LANGUAGE_HR = 'hr';
+    const LANGUAGE_HU = 'hu';
+    const LANGUAGE_IT = 'it';
+    const LANGUAGE_NL = 'nl';
+    const LANGUAGE_PL = 'pl';
+    const LANGUAGE_PT = 'pt';
+    const LANGUAGE_SE = 'se';
+    const LANGUAGE_SK = 'sk';
 
-    public const SUPPORTED_LANGUAGES = [
+    const SUPPORTED_LANGUAGES = [
         self::LANGUAGE_BG,
         self::LANGUAGE_CS,
         self::LANGUAGE_DE,
@@ -39,18 +39,18 @@ class Transaction extends ApiRequest
         self::LANGUAGE_SK,
     ];
 
-    public const CURRENCY_PLN = 'PLN';
+    const CURRENCY_PLN = 'PLN';
 
-    public const CHANNEL_CARD = 1;
-    public const CHANNEL_WIRE = 2;
-    public const CHANNEL_TRADITIONAL_WIRE = 4;
-    public const CHANNEL_ALL_24_7 = 16;
-    public const CHANNEL_PREPAYMENT = 32;
-    public const CHANNEL_PAY_BY_LINK = 64;
+    const CHANNEL_CARD = 1;
+    const CHANNEL_WIRE = 2;
+    const CHANNEL_TRADITIONAL_WIRE = 4;
+    const CHANNEL_ALL_24_7 = 16;
+    const CHANNEL_PREPAYMENT = 32;
+    const CHANNEL_PAY_BY_LINK = 64;
 
-    public const ENCODING_ISO_8859_2 = 'ISO-8859-2';
-    public const ENCODING_UTF_8 = 'UTF-8';
-    public const ENCODING_WINDOWS_1250 = 'Windows-1250';
+    const ENCODING_ISO_8859_2 = 'ISO-8859-2';
+    const ENCODING_UTF_8 = 'UTF-8';
+    const ENCODING_WINDOWS_1250 = 'Windows-1250';
 
     /**
      * @var array
