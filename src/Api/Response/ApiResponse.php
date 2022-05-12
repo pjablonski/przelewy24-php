@@ -79,17 +79,17 @@ abstract class ApiResponse
     }
 
     /**
-     * @return int|null
+     * @return string
      */
-    protected function getError(): ?int
+    protected function getError()
     {
         return $this->error;
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    protected function getErrorMessage(): ?string
+    protected function getErrorMessage()
     {
         return $this->errorMessage;
     }
