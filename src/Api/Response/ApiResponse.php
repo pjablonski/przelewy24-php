@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 abstract class ApiResponse
 {
     /**
-     * @var string
+     * @var int
      */
     protected $error;
 
@@ -24,14 +24,14 @@ abstract class ApiResponse
      */
     public function __construct(ResponseInterface $response)
     {
+        $contents = json_decode($response->getBody()->getContents());
+
+        $this->prepare($contents);
+
         if ($response->getStatusCode() != 200) {
             $this->error = $response->getStatusCode();
             $this->errorMessage = $response->getReasonPhrase();
         }
-
-        $contents = json_decode($response->getBody()->getContents());
-
-        $this->prepare($contents);
 
         if ($this->hasError()) {
             switch ($this->getError()) {
