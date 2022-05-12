@@ -3,6 +3,7 @@
 namespace Przelewy24\Api\Response;
 
 use Przelewy24\Exceptions\ApiResponseException;
+use Przelewy24\Exceptions\NotFoundException;
 use Psr\Http\Message\ResponseInterface;
 
 abstract class ApiResponse
@@ -24,8 +25,8 @@ abstract class ApiResponse
     public function __construct(ResponseInterface $response)
     {
         if ($response->getStatusCode() != 200) {
-            $this->code = $response->getStatusCode();
-            $this->error = $response->getReasonPhrase();
+            $this->error = $response->getStatusCode();
+            $this->errorMessage = $response->getReasonPhrase();
         }
 
         $contents = json_decode($response->getBody()->getContents());
@@ -33,9 +34,18 @@ abstract class ApiResponse
         $this->prepare($contents);
 
         if ($this->hasError()) {
-            throw new ApiResponseException(
-                $this->getError()
-            );
+            switch ($this->getError()) {
+                case 404:
+                    throw new NotFoundException(
+                        $this->getErrorMessage(),
+                        $this->getError()
+                    );
+                default:
+                    throw new ApiResponseException(
+                        $this->getErrorMessage(),
+                        $this->getError()
+                    );
+            }
         }
     }
 
@@ -49,7 +59,7 @@ abstract class ApiResponse
             $contents = $contents->data;
         }
 
-        $contents = (array) $contents;
+        $contents = (array)$contents;
 
         if (is_iterable($contents)) {
             foreach ($contents as $key => $value) {
@@ -69,9 +79,17 @@ abstract class ApiResponse
     }
 
     /**
+     * @return int|null
+     */
+    protected function getError(): ?int
+    {
+        return $this->error;
+    }
+
+    /**
      * @return string|null
      */
-    protected function getError(): ?string
+    protected function getErrorMessage(): ?string
     {
         return $this->errorMessage;
     }
