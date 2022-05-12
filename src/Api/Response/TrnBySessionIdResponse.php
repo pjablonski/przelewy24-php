@@ -65,9 +65,4 @@ class TrnBySessionIdResponse extends ApiResponse
 
     /** @var string */
     public $statement;
-
-    public function __set($name, $value)
-    {
-        throw new \Exception("Can't set property: " . __CLASS__ . "->$name");
-    }
 }
